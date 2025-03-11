@@ -18,3 +18,6 @@ docker run --rm -ti ffmpeg-av1:7.1.1 ffmpeg --help
 - https://gitlab.com/AOMediaCodec/SVT-AV1/-/releases
 - https://github.com/Netflix/vmaf
 - https://github.com/FFmpeg/FFmpeg
+- https://github.com/Intel-Media-SDK/MediaSDK/wiki/Intel-media-stack-on-Ubuntu
+- https://dgpu-docs.intel.com/driver/client/overview.html
+- https://github.com/intel/cartwheel-ffmpeg/issues/286

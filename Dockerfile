@@ -43,7 +43,13 @@ libx265-dev libnuma-dev \
 libvpx-dev \
 libfdk-aac-dev \
 libopus-dev \
-libdav1d-dev
+libdav1d-dev \
+libmfx1 libmfx-tools \
+libva-drm2 libva-x11-2 libva-wayland2 libva-glx2 vainfo intel-media-va-driver-non-free \
+i965-va-driver \
+software-properties-common \
+libze-intel-gpu1 libze1 intel-opencl-icd clinfo \
+libvpl-dev
 
 RUN mkdir -p $SOURCE_DIR $BIN_DIR
 
@@ -86,6 +92,7 @@ PATH="$BIN_DIR:$PATH" PKG_CONFIG_PATH="$BUILD_DIR/lib/pkgconfig" ./configure \
   --extra-libs="-lpthread -lm" \
   --ld="g++" \
   --bindir="$BIN_DIR" \
+  --enable-libvmaf \
   --enable-gpl \
   --enable-gnutls \
   --enable-libaom \
@@ -100,6 +107,7 @@ PATH="$BIN_DIR:$PATH" PKG_CONFIG_PATH="$BUILD_DIR/lib/pkgconfig" ./configure \
   --enable-libvpx \
   --enable-libx264 \
   --enable-libx265 \
+  --enable-libvpl \
   --enable-nonfree && \
 PATH="$BIN_DIR:$PATH" make -j $(nproc) && \
 make install -j $(nproc) && \
