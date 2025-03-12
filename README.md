@@ -49,3 +49,4 @@ docker run --rm -ti -v $PWD:$PWD --workdir $PWD ffmpeg-av1:7.1.1 ffprobe -i data
 - https://gist.github.com/Mcamin/b589d1526e25d3fcd72ea74217c8e1fa
 - https://docs.nvidia.com/video-technologies/video-codec-sdk/12.0/ffmpeg-with-nvidia-gpu/index.html
 - https://github.com/FFmpeg/nv-codec-headers
+- https://gitlab.com/AOMediaCodec/SVT-AV1/-/blob/master/Docs/Ffmpeg.md
