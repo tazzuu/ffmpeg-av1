@@ -8,6 +8,13 @@ docker build -t ffmpeg-av1:7.1.1 .
 docker run --rm -ti ffmpeg-av1:7.1.1 ffmpeg --help
 ```
 
+Run the scripts
+
+```bash
+# for CPU based transcoding into AV1
+./scripts/ffmpeg_svt-av1.sh input.mkv output.mkv
+```
+
 Helpful commands
 
 ```bash
