@@ -27,10 +27,10 @@ docker run ffmpeg-av1:7.1.1 ffmpeg -filters | grep vmaf
 docker run ffmpeg-av1:7.1.1 ffmpeg -h filter=libvmaf
 
 # VMAF score
-docker run --rm -ti -v $PWD:$PWD --workdir $PWD ffmpeg-av1:7.1.1 ffmpeg -i data/sample__240__libx264__aac__30s__video.mkv -i data/sample__240__libx264__aac__30s__video.mkv -lavfi libvmaf -f null -
+docker run --rm -ti -v $PWD:$PWD --workdir $PWD ffmpeg-av1:7.1.1 ffmpeg -i input.mkv -i input.mkv -lavfi libvmaf -f null -
 
 # get JSON format details of input video
-docker run --rm -ti -v $PWD:$PWD --workdir $PWD ffmpeg-av1:7.1.1 ffprobe -i data/sample__240__libx264__aac__30s__video.mkv -show_streams -show_format -print_format json -hide_banner -v quiet
+docker run --rm -ti -v $PWD:$PWD --workdir $PWD ffmpeg-av1:7.1.1 ffprobe -i input.mkv -show_streams -show_format -print_format json -hide_banner -v quiet
 ```
 
 # Resources
