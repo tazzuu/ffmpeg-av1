@@ -11,12 +11,15 @@ docker run --rm -ti ffmpeg-av1:7.1.1 ffmpeg --help
 Helpful commands
 
 ```bash
-docker run ffmpeg-av1:7.1.1 ffmpeg -filters
-# -encoders
-# -decoders
+# plugin lists
+docker run ffmpeg-av1:7.1.1 ffmpeg -encoders | grep -i av1
+docker run ffmpeg-av1:7.1.1 ffmpeg -decoders | grep -i av1
+docker run ffmpeg-av1:7.1.1 ffmpeg -filters | grep vmaf
 
+# plugin help
 docker run ffmpeg-av1:7.1.1 ffmpeg -h filter=libvmaf
 
+# VMAF score
 docker run --rm -ti -v $PWD:$PWD --workdir $PWD ffmpeg-av1:7.1.1 ffmpeg -i data/sample__240__libx264__aac__30s__video.mkv -i data/sample__240__libx264__aac__30s__video.mkv -lavfi libvmaf -f null -
 ```
 
