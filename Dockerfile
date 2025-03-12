@@ -56,6 +56,7 @@ libc6 libc6-dev unzip libnuma1
 
 RUN mkdir -p $SOURCE_DIR $BIN_DIR
 
+# AV1 libraries
 RUN cd $SOURCE_DIR && \
 git -C aom pull 2> /dev/null || git clone --depth 1 --branch $AOM_VERSION https://aomedia.googlesource.com/aom && \
 mkdir -p aom_build && \
@@ -72,6 +73,7 @@ PATH="$BIN_DIR:$PATH" cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$BUILD_D
 PATH="$BIN_DIR:$PATH" make -j $(nproc) && \
 make install -j $(nproc)
 
+# VMAF library
 RUN cd $SOURCE_DIR && \
 wget https://github.com/Netflix/vmaf/archive/v$VMAF_VERSION.tar.gz && \
 tar xvf v$VMAF_VERSION.tar.gz && \
@@ -81,6 +83,7 @@ meson setup -Denable_tests=false -Denable_docs=false --buildtype=release --defau
 ninja -j $(nproc) && \
 ninja install -j $(nproc)
 
+# Nvidia libraries
 RUN cd $SOURCE_DIR && \
 git clone --depth 1 --branch "$NV_CODEC_VERSION" https://git.videolan.org/git/ffmpeg/nv-codec-headers.git && \
 cd nv-codec-headers && make install -j $(nproc)
@@ -89,6 +92,7 @@ RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86
 dpkg -i cuda-keyring_1.1-1_all.deb && \
 apt update && apt install -y cuda-toolkit nvidia-cuda-toolkit
 
+# ffmpeg
 # # NOTE THE GIT COMMIT USED HERE INSTEAD OF VERSION TAG
 # # BECAUSE THE 7.1.1 RELEASE KEPT BREAKING ON SOME LIB
 RUN cd $SOURCE_DIR && \
