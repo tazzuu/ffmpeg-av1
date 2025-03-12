@@ -49,7 +49,8 @@ libva-drm2 libva-x11-2 libva-wayland2 libva-glx2 vainfo intel-media-va-driver-no
 i965-va-driver \
 software-properties-common \
 libze-intel-gpu1 libze1 intel-opencl-icd clinfo \
-libvpl-dev
+libvpl-dev \
+xxd
 
 RUN mkdir -p $SOURCE_DIR $BIN_DIR
 

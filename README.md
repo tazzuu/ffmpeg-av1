@@ -1,9 +1,23 @@
 # Usage
 
+Build the container
+
 ```bash
 docker build -t ffmpeg-av1:7.1.1 .
 
 docker run --rm -ti ffmpeg-av1:7.1.1 ffmpeg --help
+```
+
+Helpful commands
+
+```bash
+docker run ffmpeg-av1:7.1.1 ffmpeg -filters
+# -encoders
+# -decoders
+
+docker run ffmpeg-av1:7.1.1 ffmpeg -h filter=libvmaf
+
+docker run --rm -ti -v $PWD:$PWD --workdir $PWD ffmpeg-av1:7.1.1 ffmpeg -i data/sample__240__libx264__aac__30s__video.mkv -i data/sample__240__libx264__aac__30s__video.mkv -lavfi libvmaf -f null -
 ```
 
 # Resources
@@ -21,3 +35,8 @@ docker run --rm -ti ffmpeg-av1:7.1.1 ffmpeg --help
 - https://github.com/Intel-Media-SDK/MediaSDK/wiki/Intel-media-stack-on-Ubuntu
 - https://dgpu-docs.intel.com/driver/client/overview.html
 - https://github.com/intel/cartwheel-ffmpeg/issues/286
+- https://github.com/Netflix/vmaf/issues/111
+- https://github.com/Netflix/vmaf/blob/master/resource/doc/ffmpeg.md
+- https://ottverse.com/vmaf-ffmpeg-ubuntu-compilation-installation-usage-guide/
+- https://github.com/Netflix/vmaf/issues/989
+- https://github.com/Netflix/vmaf/blob/master/libvmaf/README.md#install
