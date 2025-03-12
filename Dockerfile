@@ -8,6 +8,7 @@ ENV AOM_VERSION=v3.12.0
 ENV SOURCE_DIR=/opt/ffmpeg_sources
 ENV BUILD_DIR=/opt/ffmpeg_build
 ENV BIN_DIR=/opt/bin
+ENV NV_CODEC_VERSION=n13.0.19.0
 
 RUN apt update && apt upgrade -y
 
@@ -50,7 +51,8 @@ i965-va-driver \
 software-properties-common \
 libze-intel-gpu1 libze1 intel-opencl-icd clinfo \
 libvpl-dev \
-xxd
+xxd \
+libc6 libc6-dev unzip libnuma1
 
 RUN mkdir -p $SOURCE_DIR $BIN_DIR
 
@@ -79,8 +81,16 @@ meson setup -Denable_tests=false -Denable_docs=false --buildtype=release --defau
 ninja -j $(nproc) && \
 ninja install -j $(nproc)
 
-# NOTE THE GIT COMMIT USED HERE INSTEAD OF VERSION TAG
-# BECAUSE THE 7.1.1 RELEASE KEPT BREAKING ON SOME LIB
+RUN cd $SOURCE_DIR && \
+git clone --depth 1 --branch "$NV_CODEC_VERSION" https://git.videolan.org/git/ffmpeg/nv-codec-headers.git && \
+cd nv-codec-headers && make install -j $(nproc)
+
+RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-keyring_1.1-1_all.deb && \
+dpkg -i cuda-keyring_1.1-1_all.deb && \
+apt update && apt install -y cuda-toolkit nvidia-cuda-toolkit
+
+# # NOTE THE GIT COMMIT USED HERE INSTEAD OF VERSION TAG
+# # BECAUSE THE 7.1.1 RELEASE KEPT BREAKING ON SOME LIB
 RUN cd $SOURCE_DIR && \
 git clone --depth 1 https://github.com/FFmpeg/FFmpeg.git ffmpeg && \
 cd ffmpeg && \
@@ -93,6 +103,10 @@ PATH="$BIN_DIR:$PATH" PKG_CONFIG_PATH="$BUILD_DIR/lib/pkgconfig" ./configure \
   --extra-libs="-lpthread -lm" \
   --ld="g++" \
   --bindir="$BIN_DIR" \
+  --enable-cuda-nvcc \
+  --enable-libnpp \
+  --extra-cflags=-I/usr/local/cuda/include \
+  --extra-ldflags=-L/usr/local/cuda/lib64 \
   --enable-libvmaf \
   --enable-gpl \
   --enable-gnutls \
@@ -109,6 +123,7 @@ PATH="$BIN_DIR:$PATH" PKG_CONFIG_PATH="$BUILD_DIR/lib/pkgconfig" ./configure \
   --enable-libx264 \
   --enable-libx265 \
   --enable-libvpl \
+  --enable-version3 \
   --enable-nonfree && \
 PATH="$BIN_DIR:$PATH" make -j $(nproc) && \
 make install -j $(nproc) && \

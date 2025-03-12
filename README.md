@@ -40,3 +40,6 @@ docker run --rm -ti -v $PWD:$PWD --workdir $PWD ffmpeg-av1:7.1.1 ffmpeg -i data/
 - https://ottverse.com/vmaf-ffmpeg-ubuntu-compilation-installation-usage-guide/
 - https://github.com/Netflix/vmaf/issues/989
 - https://github.com/Netflix/vmaf/blob/master/libvmaf/README.md#install
+- https://gist.github.com/Mcamin/b589d1526e25d3fcd72ea74217c8e1fa
+- https://docs.nvidia.com/video-technologies/video-codec-sdk/12.0/ffmpeg-with-nvidia-gpu/index.html
+- https://github.com/FFmpeg/nv-codec-headers
