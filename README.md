@@ -55,6 +55,7 @@ docker run --rm -ti -v $PWD:$PWD --workdir $PWD ffmpeg-av1:7.1.1 ffprobe -i inpu
 - https://gitlab.com/AOMediaCodec/SVT-AV1/-/blob/master/Docs/Ffmpeg.md
 - https://aomedia.googlesource.com/aom
 - https://gitlab.com/AOMediaCodec/SVT-AV1/-/releases
+- https://github.com/plexguide/tdarr-av1/tree/main
 
 ## ffmpeg
 
@@ -74,3 +75,4 @@ docker run --rm -ti -v $PWD:$PWD --workdir $PWD ffmpeg-av1:7.1.1 ffprobe -i inpu
 - https://github.com/intel/cartwheel-ffmpeg/issues/286
 - https://github.com/intel/libvpl
 - https://dgpu-docs.intel.com/driver/client/overview.html
+- https://github.com/intel/vpl-gpu-rt

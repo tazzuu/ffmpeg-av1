@@ -95,9 +95,13 @@ apt update && apt install -y cuda-toolkit nvidia-cuda-toolkit
 # ffmpeg
 # # NOTE THE GIT COMMIT USED HERE INSTEAD OF VERSION TAG
 # # BECAUSE THE 7.1.1 RELEASE KEPT BREAKING ON SOME LIB
+# NOTE: the repo is huge so we need to take drastic measures to not clone the whole thing
+# while also keeping our Dockerfile pinned to a specific version
 RUN cd $SOURCE_DIR && \
-git clone --depth 1 https://github.com/FFmpeg/FFmpeg.git ffmpeg && \
+git init ffmpeg && \
 cd ffmpeg && \
+git remote add origin https://github.com/FFmpeg/FFmpeg.git && \
+git fetch --depth=1 origin 0b097ed9f141f57e2b91f0704c721a9eff0204c0 && \
 git checkout 0b097ed9f141f57e2b91f0704c721a9eff0204c0 && \
 PATH="$BIN_DIR:$PATH" PKG_CONFIG_PATH="$BUILD_DIR/lib/pkgconfig" ./configure \
   --prefix="$BUILD_DIR" \
@@ -108,6 +112,11 @@ PATH="$BIN_DIR:$PATH" PKG_CONFIG_PATH="$BUILD_DIR/lib/pkgconfig" ./configure \
   --ld="g++" \
   --bindir="$BIN_DIR" \
   --enable-cuda-nvcc \
+  --enable-nvdec \
+  --enable-nvenc \
+  --enable-cuvid \
+  --enable-cuda \
+  --enable-ffnvcodec \
   --enable-libnpp \
   --extra-cflags=-I/usr/local/cuda/include \
   --extra-ldflags=-L/usr/local/cuda/lib64 \
