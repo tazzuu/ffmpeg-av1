@@ -21,7 +21,7 @@ VIDEO_STREAM=$(eval $FFPROBE_CMD)
 FFMPEG_CMD="$FFMPEG_BIN -y -hwaccel cuda -i \"$INPUT_FILE\""
 
 # Add video encoding settings
-FFMPEG_CMD+=" -map 0:$VIDEO_STREAM -c:v $VIDEO_CODEC -b:v 0 -cq $CQ -preset $PRESET"
+FFMPEG_CMD+=" -map 0:$VIDEO_STREAM -pix_fmt yuv420p10le -c:v $VIDEO_CODEC -b:v 0 -cq $CQ -preset $PRESET"
 
 # Map and copy all non-video streams (audio, subtitles, etc.)
 STREAMS_CMD="$FFPROBE_BIN -v error -show_entries stream=index,codec_type -of csv=p=0 '$INPUT_FILE'"
