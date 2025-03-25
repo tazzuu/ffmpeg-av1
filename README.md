@@ -67,6 +67,8 @@ docker run --rm -ti -v $PWD:$PWD --workdir $PWD ffmpeg-av1:7.1.1 ffprobe -i inpu
 - https://trac.ffmpeg.org/ticket/8810
 - https://github.com/FFmpeg/FFmpeg
 - https://gist.github.com/Mcamin/b589d1526e25d3fcd72ea74217c8e1fa
+- https://ffmpeg.org/ffmpeg.html#Advanced-options
+- https://superuser.com/questions/1612982/how-do-i-copy-all-audio-and-subtitle-when-scaling-video-with-ffmpeg
 
 ## Intel
 
