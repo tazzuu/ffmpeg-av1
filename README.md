@@ -49,6 +49,7 @@ docker run --rm -ti -v $PWD:$PWD --workdir $PWD ffmpeg-av1:7.1.1 ffprobe -i inpu
 
 - https://github.com/FFmpeg/nv-codec-headers
 - https://docs.nvidia.com/video-technologies/video-codec-sdk/12.0/ffmpeg-with-nvidia-gpu/index.html
+- https://documentation.ubuntu.com/server/how-to/graphics/install-nvidia-drivers/
 
 ## AV1
 
