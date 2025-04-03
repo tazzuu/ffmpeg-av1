@@ -9,7 +9,7 @@ PRESET=p5
 INPUT_DIR="$(readlink -f "$(dirname "$INPUT_FILE")" )"
 
 CONTAINER=ffmpeg-av1:7.1.1
-DOCKER_CMD="docker run --gpus all -v $PWD:$PWD --workdir $PWD -v '$INPUT_DIR':'$INPUT_DIR' '$CONTAINER'"
+DOCKER_CMD="docker run --runtime=nvidia --gpus all -v $PWD:$PWD --workdir $PWD -v '$INPUT_DIR':'$INPUT_DIR' '$CONTAINER'"
 FFMPEG_BIN="$DOCKER_CMD ffmpeg"
 FFPROBE_BIN="$DOCKER_CMD ffprobe"
 FFPROBE_CMD="$FFPROBE_BIN -v error -select_streams v -show_entries stream=index -of csv=p=0 '$INPUT_FILE'"

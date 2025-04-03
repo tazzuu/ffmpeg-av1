@@ -31,6 +31,9 @@ docker run --rm -ti -v $PWD:$PWD --workdir $PWD ffmpeg-av1:7.1.1 ffmpeg -i input
 
 # get JSON format details of input video
 docker run --rm -ti -v $PWD:$PWD --workdir $PWD ffmpeg-av1:7.1.1 ffprobe -i input.mkv -show_streams -show_format -print_format json -hide_banner -v quiet
+
+# test that you can run Nvidia GPU in Docker
+docker run --rm --runtime=nvidia --gpus all ubuntu nvidia-smi
 ```
 
 # Resources
