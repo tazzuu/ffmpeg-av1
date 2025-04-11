@@ -53,6 +53,8 @@ docker run --rm --runtime=nvidia --gpus all ubuntu nvidia-smi
 - https://github.com/FFmpeg/nv-codec-headers
 - https://docs.nvidia.com/video-technologies/video-codec-sdk/12.0/ffmpeg-with-nvidia-gpu/index.html
 - https://documentation.ubuntu.com/server/how-to/graphics/install-nvidia-drivers/
+- https://stackoverflow.com/questions/75661224/building-ffmpeg-with-nvidia-gpu-hardware-acceleration-in-docker-image-cannot-lo
+- https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/1.17.0/docker-specialized.html?#driver-capabilities
 
 ## AV1
 
