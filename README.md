@@ -84,6 +84,7 @@ docker run --rm --runtime=nvidia --gpus all ubuntu nvidia-smi
 - https://github.com/intel/libvpl
 - https://dgpu-docs.intel.com/driver/client/overview.html
 - https://github.com/intel/vpl-gpu-rt
+- https://github.com/Syllo/nvtop/issues/363
 
 ## Test Videos
 
