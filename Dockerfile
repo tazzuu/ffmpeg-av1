@@ -45,16 +45,30 @@ libvpx-dev \
 libfdk-aac-dev \
 libopus-dev \
 libdav1d-dev \
-libmfx1 libmfx-tools \
+libmfx-gen1.2 libmfx-tools \
 libva-drm2 libva-x11-2 libva-wayland2 libva-glx2 vainfo intel-media-va-driver-non-free \
 i965-va-driver \
 software-properties-common \
-libze-intel-gpu1 libze1 intel-opencl-icd clinfo \
 libvpl-dev \
 xxd \
 libc6 libc6-dev unzip libnuma1
 
 RUN mkdir -p $SOURCE_DIR $BIN_DIR
+
+# Intel drivers
+# https://dgpu-docs.intel.com/driver/client/overview.html
+RUN wget -qO - https://repositories.intel.com/gpu/intel-graphics.key | \
+  gpg --yes --dearmor --output /usr/share/keyrings/intel-graphics.gpg
+RUN echo \
+  "deb [arch=amd64,i386 signed-by=/usr/share/keyrings/intel-graphics.gpg] https://repositories.intel.com/gpu/ubuntu noble unified" | \
+  tee /etc/apt/sources.list.d/intel-gpu-noble.list
+RUN apt update && apt-get install -y libze-intel-gpu1 libze1 intel-opencl-icd clinfo intel-gsc libze-dev intel-ocloc
+
+# RUN cd $SOURCE_DIR && \
+# git clone --depth 1 --branch "intel-onevpl-24.4.4" https://github.com/intel/vpl-gpu-rt.git && \
+# cd vpl-gpu-rt && mkdir build && cd build && cmake .. && make
+# # && make install -j $(nproc)
+# RUN fooo
 
 # AV1 libraries
 RUN cd $SOURCE_DIR && \
@@ -84,6 +98,7 @@ ninja -j $(nproc) && \
 ninja install -j $(nproc)
 
 # Nvidia libraries
+# sometimes the URL does not work might have to try https://github.com/FFmpeg/nv-codec-headers.git (https://github.com/FFmpeg/nv-codec-headers) instead
 RUN cd $SOURCE_DIR && \
 git clone --depth 1 --branch "$NV_CODEC_VERSION" https://git.videolan.org/git/ffmpeg/nv-codec-headers.git && \
 cd nv-codec-headers && make install -j $(nproc)
@@ -141,5 +156,9 @@ PATH="$BIN_DIR:$PATH" PKG_CONFIG_PATH="$BUILD_DIR/lib/pkgconfig" ./configure \
 PATH="$BIN_DIR:$PATH" make -j $(nproc) && \
 make install -j $(nproc) && \
 hash -r
+
+# NOTE:
+# --enable-libmfx \
+# can not use libmfx and libvpl together
 
 ENV PATH=$BIN_DIR:$PATH
