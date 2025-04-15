@@ -3,9 +3,13 @@
 Build the container
 
 ```bash
+# Container for Nvidia GPU & CPU
 docker build -t ffmpeg-av1:7.1.1 .
 
 docker run --rm -ti ffmpeg-av1:7.1.1 ffmpeg --help
+
+# Container for Intel
+( cd intel_arc && docker build -t ffmpeg-av1:7.1.1-intel . )
 ```
 
 Run the scripts

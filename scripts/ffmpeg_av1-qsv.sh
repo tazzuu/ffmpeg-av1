@@ -1,6 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
+CONTAINER="ffmpeg-av1:7.1.1-intel"
 INTEL_PCI_NODE="$(lspci | grep 'VGA compatible controller: Intel Corporation' | cut -d ' ' -f1)"
 INTEL_CARD="$(readlink -f /dev/dri/by-path/pci-0000:$INTEL_PCI_NODE-card)"
 INTEL_RENDER="$(readlink -f /dev/dri/by-path/pci-0000:$INTEL_PCI_NODE-render)"
@@ -14,7 +15,7 @@ docker run --rm \
 -w $PWD \
 -e MFX_ACCEL_MODE=VAAPI \
 -e MFX_VAAPI_DEVICE=$INTEL_RENDER \
-ffmpeg-av1:7.1.1 \
+"$CONTAINER" \
 ffmpeg -y \
 -loglevel verbose \
 -i input.mkv \
