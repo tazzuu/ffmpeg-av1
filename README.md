@@ -77,7 +77,12 @@ docker run --rm --device=/dev/dri:/dev/dri --group-add video ubuntu:24.04 bash -
 - https://github.com/FFmpeg/FFmpeg
 - https://gist.github.com/Mcamin/b589d1526e25d3fcd72ea74217c8e1fa
 - https://ffmpeg.org/ffmpeg.html#Advanced-options
+  - AV1: https://trac.ffmpeg.org/wiki/Encode/AV1
+  - SVT-AV1: https://ffmpeg.org/ffmpeg-all.html#libsvtav1
+  - CUDA: https://ffmpeg.org/ffmpeg-all.html#CUDA
+
 - https://superuser.com/questions/1612982/how-do-i-copy-all-audio-and-subtitle-when-scaling-video-with-ffmpeg
+
 
 ## Intel
 

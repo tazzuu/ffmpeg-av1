@@ -1,4 +1,7 @@
 #!/bin/bash
+
+# https://docs.nvidia.com/video-technologies/video-codec-sdk/12.0/ffmpeg-with-nvidia-gpu/index.html
+
 set -euo pipefail
 
 INPUT_FILE="$1"
