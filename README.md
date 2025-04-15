@@ -34,12 +34,19 @@ docker run --rm -ti -v $PWD:$PWD --workdir $PWD ffmpeg-av1:7.1.1 ffprobe -i inpu
 
 # test that you can run Nvidia GPU in Docker
 docker run --rm --runtime=nvidia --gpus all ubuntu nvidia-smi
+docker run --rm --runtime=nvidia --gpus all -e NVIDIA_DRIVER_CAPABILITIES=video ffmpeg-av1:7.1.1 clinfo
 
 # test that you can run Intel GPU in Docker
-docker run --rm --device=/dev/dri:/dev/dri --group-add video ubuntu:24.04 bash -c 'apt update && apt install -y clinfo intel-opencl-icd && clinfo'
+docker run --rm --device=/dev/dri:/dev/dri --group-add video ffmpeg-av1:7.1.1 clinfo
+# with included script
+./scripts/check-intel-gpu.sh
 ```
 
 # Resources
+
+## General
+
+- https://wiki.archlinux.org/title/Hardware_video_acceleration
 
 ## VMAF
 
@@ -95,6 +102,8 @@ docker run --rm --device=/dev/dri:/dev/dri --group-add video ubuntu:24.04 bash -
 - https://github.com/Syllo/nvtop/issues/363
 - https://github.com/returnhappy/tdarr_intel_arc_av1
 - https://forum.level1techs.com/t/ffmpeg-av1-encoding-using-intel-arc-gpu-tips/205120
+- https://wiki.archlinux.org/title/FFmpeg#Intel_QuickSync_(QSV)
+  - https://wiki.archlinux.org/title/FFmpeg#VA-API
 
 ## Docker
 
@@ -104,32 +113,3 @@ docker run --rm --device=/dev/dri:/dev/dri --group-add video ubuntu:24.04 bash -
 ## Test Videos
 
 - https://github.com/joshuatz/video-test-file-links
-
-## Intel GPU
-
-```bash
-# Verify that the GPU is working
-
-# check with clinfo
-docker run --rm --device=/dev/dri:/dev/dri --group-add video ubuntu:24.04 bash -c 'apt update && apt install -y clinfo intel-opencl-icd && clinfo'
-
-# get the path to the GPU for Intel ; this can change on reboot
-INTEL_PCI_NODE="$(lspci | grep 'VGA compatible controller: Intel Corporation' | cut -d ' ' -f1)"
-INTEL_CARD="$(readlink -f /dev/dri/by-path/pci-0000:$INTEL_PCI_NODE-card)"
-INTEL_RENDER="$(readlink -f /dev/dri/by-path/pci-0000:$INTEL_PCI_NODE-render)"
-
-# check with vainfo
-docker run --rm \
---device=$INTEL_CARD \
---device=$INTEL_RENDER \
---group-add video \
--e LIBVA_DRIVER_NAME=iHD \
--e LIBVA_DRIVERS_PATH=/usr/lib/x86_64-linux-gnu/dri \
--e XDG_RUNTIME_DIR=/tmp \
-ffmpeg-av1:7.1.1 vainfo --display drm --device $INTEL_RENDER
-
-```
-
-
-
-
