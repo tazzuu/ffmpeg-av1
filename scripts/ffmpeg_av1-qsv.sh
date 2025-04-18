@@ -24,20 +24,23 @@ docker run --rm \
 -e MFX_ACCEL_MODE=VAAPI \
 -e MFX_VAAPI_DEVICE=$INTEL_RENDER \
 "$CONTAINER" \
-ffmpeg -y \
--loglevel verbose \
--hwaccel vaapi -vaapi_device $INTEL_RENDER \
--i "$INPUT_FILE" \
--vf 'format=nv12,hwupload' \
--c:v av1_vaapi -b:v 4M \
--c:a copy \
-"$OUTPUT_FILE"
+ffmpeg -v verbose -y \
+-init_hw_device vaapi=va:$INTEL_RENDER \
+-hwaccel vaapi \
+-hwaccel_output_format vaapi \
+-i "$INPUT_FILE"  -c:v av1_vaapi "$OUTPUT_FILE"
 
 
 
-
-
-
+# THIS WORKS
+# ffmpeg -y \
+# -loglevel verbose \
+# -hwaccel vaapi -vaapi_device $INTEL_RENDER \
+# -i "$INPUT_FILE" \
+# -vf 'format=nv12,hwupload' \
+# -c:v av1_vaapi -b:v 4M \
+# -c:a copy \
+# "$OUTPUT_FILE"
 
 
 
