@@ -109,6 +109,7 @@ docker run --rm --device=/dev/dri:/dev/dri --group-add video ffmpeg-av1:7.1.1 cl
 - https://wiki.archlinux.org/title/FFmpeg#Intel_QuickSync_(QSV)
   - https://wiki.archlinux.org/title/FFmpeg#VA-API
 - https://github.com/intel/cartwheel-ffmpeg/issues/233#issuecomment-1437305820
+- https://www.intel.com/content/www/us/en/support/articles/000098345/graphics.html
 
 ## Docker
 
