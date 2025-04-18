@@ -1,7 +1,8 @@
 FROM ubuntu:24.04
 
 # actually we are using 0b097ed9f141f57e2b91f0704c721a9eff0204c0 because the latest version breaks with AV1 lib
-ENV FFMPEG_VERSION=7.1.1
+# ENV FFMPEG_VERSION=7.1.1
+ENV FFMPEG_VERSION=7684243fbe6e84fecb4a039195d5fda8a006a2a4
 ENV VMAF_VERSION=3.0.0
 ENV SVT_AV1_VERSION=v3.0.1
 ENV AOM_VERSION=v3.12.0
@@ -116,8 +117,8 @@ RUN cd $SOURCE_DIR && \
 git init ffmpeg && \
 cd ffmpeg && \
 git remote add origin https://github.com/FFmpeg/FFmpeg.git && \
-git fetch --depth=1 origin 0b097ed9f141f57e2b91f0704c721a9eff0204c0 && \
-git checkout 0b097ed9f141f57e2b91f0704c721a9eff0204c0 && \
+git fetch --depth=1 origin "$FFMPEG_VERSION" && \
+git checkout "$FFMPEG_VERSION" && \
 PATH="$BIN_DIR:$PATH" PKG_CONFIG_PATH="$BUILD_DIR/lib/pkgconfig" ./configure \
   --prefix="$BUILD_DIR" \
   --pkg-config-flags="--static" \

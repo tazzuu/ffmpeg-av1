@@ -2,7 +2,6 @@ FROM ubuntu:24.04
 
 # actually we are using 0b097ed9f141f57e2b91f0704c721a9eff0204c0 because the latest version breaks with AV1 lib
 # ENV FFMPEG_VERSION=7.1.1
-#0b097ed9f141f57e2b91f0704c721a9eff0204c0
 ENV FFMPEG_VERSION=7684243fbe6e84fecb4a039195d5fda8a006a2a4
 ENV SOURCE_DIR=/opt/ffmpeg_sources
 ENV BUILD_DIR=/opt/ffmpeg_build
