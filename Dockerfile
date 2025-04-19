@@ -1,6 +1,5 @@
 FROM ubuntu:24.04
 
-# actually we are using 0b097ed9f141f57e2b91f0704c721a9eff0204c0 because the latest version breaks with AV1 lib
 # ENV FFMPEG_VERSION=7.1.1
 ENV FFMPEG_VERSION=7684243fbe6e84fecb4a039195d5fda8a006a2a4
 ENV VMAF_VERSION=3.0.0
@@ -56,21 +55,6 @@ libc6 libc6-dev unzip libnuma1
 
 RUN mkdir -p $SOURCE_DIR $BIN_DIR
 
-# Intel drivers
-# https://dgpu-docs.intel.com/driver/client/overview.html
-RUN wget -qO - https://repositories.intel.com/gpu/intel-graphics.key | \
-  gpg --yes --dearmor --output /usr/share/keyrings/intel-graphics.gpg
-RUN echo \
-  "deb [arch=amd64,i386 signed-by=/usr/share/keyrings/intel-graphics.gpg] https://repositories.intel.com/gpu/ubuntu noble unified" | \
-  tee /etc/apt/sources.list.d/intel-gpu-noble.list
-RUN apt update && apt-get install -y libze-intel-gpu1 libze1 intel-opencl-icd clinfo intel-gsc libze-dev intel-ocloc
-
-# RUN cd $SOURCE_DIR && \
-# git clone --depth 1 --branch "intel-onevpl-24.4.4" https://github.com/intel/vpl-gpu-rt.git && \
-# cd vpl-gpu-rt && mkdir build && cd build && cmake .. && make
-# # && make install -j $(nproc)
-# RUN fooo
-
 # AV1 libraries
 RUN cd $SOURCE_DIR && \
 git -C aom pull 2> /dev/null || git clone --depth 1 --branch $AOM_VERSION https://aomedia.googlesource.com/aom && \
@@ -99,9 +83,9 @@ ninja -j $(nproc) && \
 ninja install -j $(nproc)
 
 # Nvidia libraries
-# sometimes the URL does not work might have to try https://github.com/FFmpeg/nv-codec-headers.git (https://github.com/FFmpeg/nv-codec-headers) instead
+# This is the official URL but its constantly down https://git.videolan.org/git/ffmpeg/nv-codec-headers.git
 RUN cd $SOURCE_DIR && \
-git clone --depth 1 --branch "$NV_CODEC_VERSION" https://git.videolan.org/git/ffmpeg/nv-codec-headers.git && \
+git clone --depth 1 --branch "$NV_CODEC_VERSION" https://github.com/FFmpeg/nv-codec-headers.git && \
 cd nv-codec-headers && make install -j $(nproc)
 
 RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-keyring_1.1-1_all.deb && \
