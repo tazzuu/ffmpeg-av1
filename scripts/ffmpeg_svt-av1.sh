@@ -6,7 +6,7 @@ OUTPUT_FILE="$2"
 VIDEO_CODEC="libsvtav1"
 CRF=25
 PRESET=4
-INPUT_DIR="$(dirname "$INPUT_FILE")"
+INPUT_DIR="$(readlink -f $(dirname "$INPUT_FILE"))"
 
 CONTAINER=ffmpeg-av1:7.1.1
 FFMPEG_BIN="docker run -v $PWD:$PWD --workdir $PWD -v '$INPUT_DIR':'$INPUT_DIR' '$CONTAINER' ffmpeg"
